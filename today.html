@@ -11,11 +11,65 @@
             50% { transform: translateY(-10px) rotate3d(1, 1, 1, 2deg); }
             100% { transform: translateY(0px) rotate3d(1, 1, 1, 0deg); }
         }
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); opacity: 0.1; }
+            50% { transform: scale(1.25); opacity: 0.25; }
+        }
+        @keyframes breathe-slow {
+            0%, 100% { transform: scale(1); opacity: 0.08; }
+            50% { transform: scale(1.35); opacity: 0.2; }
+        }
+        @keyframes breathe-fast {
+            0%, 100% { transform: scale(1); opacity: 0.12; }
+            50% { transform: scale(1.15); opacity: 0.3; }
+        }
+        @keyframes ripple {
+            0% { transform: scale(0.8); opacity: 0.3; }
+            100% { transform: scale(1.2); opacity: 0; }
+        }
+        @keyframes wave {
+            0% { transform: scale(1); opacity: 0.3; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.7; }
+        }
         .float-card {
             animation: float 6s ease-in-out infinite;
         }
+        .breathe-animation {
+            animation: breathe 12s ease-in-out infinite;
+        }
+        .breathe-slow {
+            animation: breathe-slow 16s ease-in-out infinite;
+        }
+        .breathe-fast {
+            animation: breathe-fast 8s ease-in-out infinite;
+        }
+        .ripple-animation {
+            animation: ripple 4s ease-out infinite;
+        }
+        .wave-animation {
+            animation: wave 4s ease-out infinite;
+        }
+        .pulse-animation {
+            animation: pulse 4s ease-in-out infinite;
+        }
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
         .bg-diffused {
             background: linear-gradient(135deg, #f0f4ff 0%, #f5f7ff 50%, #f8f9ff 100%);
+        }
+        .ring-blur {
+            filter: blur(2.5px);
+        }
+        .dot-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 1.5px solid rgba(96, 165, 250, 0.4);
+            pointer-events: none;
         }
     </style>
 </head>
@@ -48,17 +102,17 @@
         <!-- 卡片堆叠区域 -->
         <div class="relative h-[700px] flex items-start justify-center pt-2">
             <!-- 第三张卡片（最底层） -->
-            <div class="absolute w-[85%] h-[620px] rounded-3xl bg-white shadow-lg transform translate-y-8 scale-90 opacity-40">
+            <div class="absolute w-[85%] h-[580px] rounded-3xl bg-white shadow-lg transform translate-y-8 scale-90 opacity-40">
             </div>
             
             <!-- 第二张卡片（中间层） -->
-            <div class="absolute w-[85%] h-[620px] rounded-3xl bg-white shadow-lg transform translate-y-4 scale-95 opacity-70">
+            <div class="absolute w-[85%] h-[580px] rounded-3xl bg-white shadow-lg transform translate-y-4 scale-95 opacity-70">
             </div>
             
             <!-- 第一张卡片（当前层） -->
-            <div class="absolute w-[85%] h-[620px] rounded-3xl bg-white shadow-xl p-5 float-card">
+            <div class="absolute w-[85%] h-[580px] rounded-3xl bg-white shadow-xl p-5 float-card">
                 <!-- 卡片头部 -->
-                <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center justify-between mb-3">
                     <div class="flex items-center space-x-2">
                         <div class="w-2.5 h-2.5 rounded-full bg-blue-500"></div>
                         <span class="text-blue-500 text-base font-medium">运动类</span>
@@ -70,8 +124,8 @@
                 </div>
                 
                 <!-- 卡片主图 -->
-                <div class="relative mb-4">
-                    <img src="https://images.unsplash.com/photo-1597452485669-2c7bb5fef90d?w=800" class="w-full h-40 object-cover rounded-2xl"/>
+                <div class="relative mb-3">
+                    <img src="https://images.unsplash.com/photo-1597452485669-2c7bb5fef90d?w=800" class="w-full h-36 object-cover rounded-2xl"/>
                     <div class="absolute inset-0 bg-black bg-opacity-30 rounded-2xl flex items-center justify-center">
                         <div class="bg-white bg-opacity-95 rounded-2xl p-4 mx-6">
                             <p class="text-base text-gray-700 leading-relaxed">
@@ -85,10 +139,10 @@
                 </div>
                 
                 <!-- 卡片标题 -->
-                <h2 class="text-2xl font-bold mb-3">办公室隐形瘦腿术</h2>
+                <h2 class="text-2xl font-bold mb-2">办公室隐形瘦腿术</h2>
                 
                 <!-- 卡片信息 -->
-                <div class="flex items-center space-x-6 mb-3">
+                <div class="flex items-center space-x-6 mb-2">
                     <div class="flex items-center space-x-2">
                         <img src="https://unpkg.com/lucide-static@latest/icons/clock.svg" class="w-4.5 h-4.5"/>
                         <span class="text-base text-gray-600">2分15秒</span>
@@ -100,15 +154,15 @@
                 </div>
                 
                 <!-- 目标标签 -->
-                <div class="flex flex-wrap gap-2 mb-4">
+                <div class="flex flex-wrap gap-2 mb-3">
                     <span class="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-sm">预防静脉曲张</span>
                     <span class="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-sm">提升代谢率12%</span>
                 </div>
 
                 <!-- 扩展信息层 -->
-                <div class="space-y-3 mb-16">
+                <div class="space-y-2 mb-14">
                     <div>
-                        <h4 class="text-base font-medium text-gray-700 mb-2 flex items-center">
+                        <h4 class="text-base font-medium text-gray-700 mb-1.5 flex items-center">
                             <img src="https://unpkg.com/lucide-static@latest/icons/book-open.svg" class="w-4.5 h-4.5 mr-2"/>
                             科学依据
                         </h4>
@@ -117,11 +171,11 @@
                         </p>
                     </div>
                     <div>
-                        <h4 class="text-base font-medium text-gray-700 mb-2 flex items-center">
+                        <h4 class="text-base font-medium text-gray-700 mb-1.5 flex items-center">
                             <img src="https://unpkg.com/lucide-static@latest/icons/sparkles.svg" class="w-4.5 h-4.5 mr-2"/>
                             适配您的原因
                         </h4>
-                        <div class="space-y-2">
+                        <div class="space-y-1.5">
                             <div class="flex items-center text-sm text-gray-600">
                                 <div class="w-2 h-2 rounded-full bg-red-400 mr-2"></div>
                                 检测到您日均久坐时长 9.2h
@@ -135,7 +189,7 @@
                 </div>
 
                 <!-- 开始按钮 -->
-                <div class="absolute bottom-6 left-6 right-6">
+                <div class="absolute bottom-5 left-5 right-5">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center space-x-1">
                             <img src="https://unpkg.com/lucide-static@latest/icons/trophy.svg" class="w-4 h-4 text-yellow-500"/>
@@ -204,7 +258,7 @@
         </div>
 
         <!-- 任务列表 -->
-        <div class="px-6 space-y-3">
+        <div class="px-6 space-y-3 h-[680px] overflow-y-auto">
             <!-- 已完成任务 -->
             <div class="bg-gray-50 rounded-2xl p-4">
                 <div class="flex items-center justify-between mb-2">
@@ -217,14 +271,43 @@
                         <span class="text-green-500 text-sm">已完成</span>
                     </div>
                 </div>
-                <h3 class="font-medium mb-1">健康早餐搭配方案</h3>
+                <h3 class="font-medium mb-1">营养均衡早餐打卡</h3>
+                <p class="text-sm text-gray-500 mb-2">含优质蛋白15g、膳食纤维6g、不饱和脂肪酸4g</p>
                 <div class="flex items-center space-x-4 text-sm text-gray-500">
                     <span>08:30</span>
                     <span>+200经验</span>
                 </div>
             </div>
 
-            <!-- 待完成任务 -->
+            <!-- 自动跟踪任务 - 步数 -->
+            <div class="bg-white rounded-2xl p-4 border border-gray-100">
+                <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 rounded-full bg-blue-500"></div>
+                        <span class="text-blue-500 text-sm">运动类</span>
+                    </div>
+                    <div class="flex items-center space-x-1">
+                        <img src="https://unpkg.com/lucide-static@latest/icons/activity.svg" class="w-4 h-4 text-blue-500"/>
+                        <span class="text-blue-500 text-sm">实时同步</span>
+                    </div>
+                </div>
+                <h3 class="font-medium mb-1">工作日动态步数目标</h3>
+                <div class="mb-2">
+                    <div class="flex justify-between text-sm text-gray-500 mb-1">
+                        <span>当前 4,326 步</span>
+                        <span>目标 8,000 步</span>
+                    </div>
+                    <div class="h-2 bg-gray-100 rounded-full">
+                        <div class="h-2 w-[54%] bg-blue-500 rounded-full"></div>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4 text-sm text-gray-500">
+                    <span>全天有效</span>
+                    <span>消耗168千卡</span>
+                </div>
+            </div>
+
+            <!-- 计时任务 - 运动类 -->
             <div class="bg-white rounded-2xl p-4 border border-gray-100">
                 <div class="flex items-center justify-between mb-2">
                     <div class="flex items-center space-x-2">
@@ -232,17 +315,18 @@
                         <span class="text-blue-500 text-sm">运动类</span>
                     </div>
                     <button class="bg-blue-50 text-blue-500 px-3 py-1 rounded-full text-sm">
-                        开始
+                        开始计时
                     </button>
                 </div>
-                <h3 class="font-medium mb-1">办公室隐形瘦腿术</h3>
+                <h3 class="font-medium mb-1">办公室腿部循环训练</h3>
+                <p class="text-sm text-gray-500 mb-2">改善静脉回流，预防下肢水肿，每次训练消耗53千卡</p>
                 <div class="flex items-center space-x-4 text-sm text-gray-500">
                     <span>2分15秒</span>
                     <span>难度★★☆</span>
                 </div>
             </div>
 
-            <!-- 更多待完成任务 -->
+            <!-- 计时任务 - 心理类 -->
             <div class="bg-white rounded-2xl p-4 border border-gray-100">
                 <div class="flex items-center justify-between mb-2">
                     <div class="flex items-center space-x-2">
@@ -250,12 +334,120 @@
                         <span class="text-yellow-500 text-sm">心理类</span>
                     </div>
                     <button class="bg-yellow-50 text-yellow-500 px-3 py-1 rounded-full text-sm">
-                        开始
+                        开始计时
                     </button>
                 </div>
-                <h3 class="font-medium mb-1">3分钟正念呼吸练习</h3>
+                <h3 class="font-medium mb-1">正念呼吸减压练习</h3>
+                <p class="text-sm text-gray-500 mb-2">配合呼吸动画，缓解工作压力，降低心率5-8次/分</p>
                 <div class="flex items-center space-x-4 text-sm text-gray-500">
                     <span>3分钟</span>
+                    <span>难度★☆☆</span>
+                </div>
+            </div>
+
+            <!-- 自动跟踪任务 - 血糖 -->
+            <div class="bg-white rounded-2xl p-4 border border-gray-100">
+                <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                        <span class="text-green-500 text-sm">监测类</span>
+                    </div>
+                    <div class="flex items-center space-x-1">
+                        <img src="https://unpkg.com/lucide-static@latest/icons/activity.svg" class="w-4 h-4 text-green-500"/>
+                        <span class="text-green-500 text-sm">待同步</span>
+                    </div>
+                </div>
+                <h3 class="font-medium mb-1">餐后2h血糖监测</h3>
+                <p class="text-sm text-gray-500 mb-2">建议值4.4-7.8mmol/L，同步Apple健康数据</p>
+                <div class="flex items-center space-x-4 text-sm text-gray-500">
+                    <span>14:30前完成</span>
+                    <span>今日第2次</span>
+                </div>
+            </div>
+
+            <!-- 手动打卡任务 - 饮食类 -->
+            <div class="bg-white rounded-2xl p-4 border border-gray-100">
+                <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                        <span class="text-green-500 text-sm">饮食类</span>
+                    </div>
+                    <button class="bg-green-50 text-green-500 px-3 py-1 rounded-full text-sm flex items-center">
+                        <img src="https://unpkg.com/lucide-static@latest/icons/camera.svg" class="w-4 h-4 mr-1"/>
+                        拍照打卡
+                    </button>
+                </div>
+                <h3 class="font-medium mb-1">健康午餐搭配记录</h3>
+                <p class="text-sm text-gray-500 mb-2">碳水40%、蛋白质30%、蔬菜30%，控制精制米面</p>
+                <div class="flex items-center space-x-4 text-sm text-gray-500">
+                    <span>12:00前完成</span>
+                    <span>难度★★☆</span>
+                </div>
+            </div>
+
+            <!-- 计时任务 - 运动类 -->
+            <div class="bg-white rounded-2xl p-4 border border-gray-100">
+                <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 rounded-full bg-blue-500"></div>
+                        <span class="text-blue-500 text-sm">运动类</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <img src="https://unpkg.com/lucide-static@latest/icons/clock.svg" class="w-4 h-4 text-gray-400"/>
+                        <span class="text-gray-400 text-sm">16:00</span>
+                    </div>
+                </div>
+                <h3 class="font-medium mb-1">站立式八段锦导练</h3>
+                <p class="text-sm text-gray-500 mb-2">改善肩颈僵硬，激活全身血液循环，消耗86千卡</p>
+                <div class="flex items-center space-x-4 text-sm text-gray-500">
+                    <span>5分钟</span>
+                    <span>难度★★★</span>
+                </div>
+            </div>
+
+            <!-- 自动跟踪任务 - 心率 -->
+            <div class="bg-white rounded-2xl p-4 border border-gray-100">
+                <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 rounded-full bg-yellow-500"></div>
+                        <span class="text-yellow-500 text-sm">监测类</span>
+                    </div>
+                    <div class="flex items-center space-x-1">
+                        <img src="https://unpkg.com/lucide-static@latest/icons/activity.svg" class="w-4 h-4 text-yellow-500"/>
+                        <span class="text-yellow-500 text-sm">实时同步</span>
+                    </div>
+                </div>
+                <h3 class="font-medium mb-1">静息心率监测</h3>
+                <div class="mb-2">
+                    <div class="flex justify-between text-sm text-gray-500 mb-1">
+                        <span>当前 78 次/分</span>
+                        <span>目标范围 60-80 次/分</span>
+                    </div>
+                    <div class="h-2 bg-gray-100 rounded-full">
+                        <div class="h-2 w-[90%] bg-yellow-500 rounded-full"></div>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4 text-sm text-gray-500">
+                    <span>全天监测</span>
+                    <span>状态正常</span>
+                </div>
+            </div>
+
+            <!-- 手动打卡任务 - 心理类 -->
+            <div class="bg-white rounded-2xl p-4 border border-gray-100">
+                <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 rounded-full bg-yellow-500"></div>
+                        <span class="text-yellow-500 text-sm">心理类</span>
+                    </div>
+                    <button class="bg-yellow-50 text-yellow-500 px-3 py-1 rounded-full text-sm">
+                        去记录
+                    </button>
+                </div>
+                <h3 class="font-medium mb-1">工作日情绪能量记录</h3>
+                <p class="text-sm text-gray-500 mb-2">记录当前情绪状态，分析情绪波动规律</p>
+                <div class="flex items-center space-x-4 text-sm text-gray-500">
+                    <span>19:00前完成</span>
                     <span>难度★☆☆</span>
                 </div>
             </div>
@@ -276,8 +468,262 @@
                     </div>
                     <div class="text-right">
                         <p class="text-sm text-gray-500 mb-1">已完成任务</p>
-                        <p class="text-xl font-bold">1/3</p>
+                        <p class="text-xl font-bold">1/9</p>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 计时器页面 Mockup -->
+    <div class="w-[390px] h-[844px] bg-diffused rounded-[40px] shadow-2xl relative overflow-hidden">
+        <!-- 状态栏 -->
+        <div class="absolute top-0 left-0 right-0 h-[48px] bg-gradient-to-b from-white/50 to-transparent">
+            <div class="flex justify-between items-center px-5 h-full text-[15px] font-medium text-black/60">
+                <span>11:06</span>
+                <div class="flex items-center space-x-2">
+                    <img src="https://unpkg.com/lucide-static@latest/icons/signal-medium.svg" class="w-5 h-5"/>
+                    <img src="https://unpkg.com/lucide-static@latest/icons/wifi.svg" class="w-5 h-5"/>
+                    <img src="https://unpkg.com/lucide-static@latest/icons/battery-medium.svg" class="w-5 h-5"/>
+                </div>
+            </div>
+        </div>
+
+        <!-- 顶部返回按钮和任务信息 -->
+        <div class="absolute top-14 w-full px-5">
+            <button class="p-2">
+                <img src="https://unpkg.com/lucide-static@latest/icons/x.svg" class="w-6 h-6 text-black/50"/>
+            </button>
+            <div class="text-center mt-2">
+                <h2 class="text-xl font-medium text-black/70">办公室隐形瘦腿术</h2>
+                <div class="flex items-center justify-center space-x-2 mt-1">
+                    <img src="https://unpkg.com/lucide-static@latest/icons/dumbbell.svg" class="w-4 h-4 text-black/40"/>
+                    <span class="text-sm text-black/40">难度★★☆</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 计时器主体 -->
+        <div class="absolute inset-0 flex items-center justify-center">
+            <!-- 扩散光环 -->
+            <div class="absolute w-[460px] h-[460px] rounded-full bg-blue-100/10 breathe-slow ring-blur"></div>
+            <div class="absolute w-[420px] h-[420px] rounded-full bg-blue-100/15 ripple-animation ring-blur"></div>
+            <div class="absolute w-[420px] h-[420px] rounded-full bg-blue-100/15 ripple-animation ring-blur" style="animation-delay: -2s"></div>
+            <div class="absolute w-[420px] h-[420px] rounded-full bg-blue-100/15 ripple-animation ring-blur" style="animation-delay: -3s"></div>
+            
+            <!-- 呼吸光环 -->
+            <div class="absolute w-[380px] h-[380px] rounded-full bg-blue-200/12 breathe-animation ring-blur"></div>
+            <div class="absolute w-[360px] h-[360px] rounded-full bg-indigo-200/12 breathe-animation ring-blur" style="animation-delay: -4s"></div>
+            <div class="absolute w-[340px] h-[340px] rounded-full bg-purple-200/12 breathe-animation ring-blur" style="animation-delay: -8s"></div>
+
+            <!-- 内部呼吸圈 -->
+            <div class="absolute w-[320px] h-[320px] rounded-full bg-blue-100/10 breathe-fast ring-blur"></div>
+            <div class="absolute w-[300px] h-[300px] rounded-full bg-indigo-100/10 breathe-fast ring-blur" style="animation-delay: -2s"></div>
+            <div class="absolute w-[280px] h-[280px] rounded-full bg-purple-100/10 breathe-fast ring-blur" style="animation-delay: -4s"></div>
+
+            <!-- 水波纹扩散效果 -->
+            <div class="absolute inset-0 flex items-center justify-center">
+                <div class="dot-ring w-[280px] h-[280px] wave-animation"></div>
+                <div class="dot-ring w-[280px] h-[280px] wave-animation" style="animation-delay: -0.8s"></div>
+                <div class="dot-ring w-[280px] h-[280px] wave-animation" style="animation-delay: -1.6s"></div>
+                <div class="dot-ring w-[280px] h-[280px] wave-animation" style="animation-delay: -2.4s"></div>
+                <div class="dot-ring w-[280px] h-[280px] wave-animation" style="animation-delay: -3.2s"></div>
+            </div>
+            
+            <!-- 进度环 -->
+            <svg class="progress-ring absolute w-[280px] h-[280px]">
+                <circle 
+                    cx="140" 
+                    cy="140" 
+                    r="130" 
+                    stroke="black" 
+                    stroke-opacity="0.08"
+                    stroke-width="1.5" 
+                    fill="none"/>
+                <circle 
+                    cx="140" 
+                    cy="140" 
+                    r="130" 
+                    stroke="black" 
+                    stroke-opacity="0.3"
+                    stroke-width="1.5" 
+                    fill="none"
+                    stroke-dasharray="816.8"
+                    stroke-dashoffset="204.2"
+                    class="pulse-animation"/>
+            </svg>
+
+            <!-- 时间显示 -->
+            <div class="text-center z-10 float-animation">
+                <div class="text-[60px] font-extralight tracking-wider text-black/70">01:42</div>
+                <div class="text-black/40 tracking-wider text-sm mt-1">剩余时间</div>
+            </div>
+        </div>
+
+        <!-- 暂停按钮 -->
+        <button class="absolute bottom-20 left-1/2 transform -translate-x-1/2 w-16 h-16 rounded-full bg-white/20 backdrop-blur-lg flex items-center justify-center transition-all hover:bg-white/30">
+            <img src="https://unpkg.com/lucide-static@latest/icons/pause.svg" class="w-7 h-7 text-black/50"/>
+        </button>
+    </div>
+
+    <!-- 等级成就页面 Mockup -->
+    <div class="w-[390px] h-[844px] bg-diffused rounded-[40px] shadow-2xl relative overflow-hidden">
+        <!-- 顶部状态栏 -->
+        <div class="absolute top-0 left-0 right-0 h-[48px] bg-gradient-to-b from-white/50 to-transparent">
+            <div class="flex justify-between items-center px-5 h-full text-[15px] font-medium text-black/60">
+                <span>11:06</span>
+                <div class="flex items-center space-x-2">
+                    <img src="https://unpkg.com/lucide-static@latest/icons/signal-medium.svg" class="w-5 h-5"/>
+                    <img src="https://unpkg.com/lucide-static@latest/icons/wifi.svg" class="w-5 h-5"/>
+                    <img src="https://unpkg.com/lucide-static@latest/icons/battery-medium.svg" class="w-5 h-5"/>
+                </div>
+            </div>
+        </div>
+
+        <!-- 顶部返回按钮和标题 -->
+        <div class="px-6 pt-14 pb-4">
+            <div class="flex items-center justify-between">
+                <button class="p-2">
+                    <img src="https://unpkg.com/lucide-static@latest/icons/arrow-left.svg" class="w-6 h-6"/>
+                </button>
+                <h1 class="text-xl font-bold">我的成就</h1>
+                <button class="p-2">
+                    <img src="https://unpkg.com/lucide-static@latest/icons/share.svg" class="w-6 h-6"/>
+                </button>
+            </div>
+        </div>
+
+        <!-- 用户等级卡片 -->
+        <div class="px-6">
+            <div class="bg-gradient-to-br from-purple-500 to-pink-500 rounded-3xl p-6 text-white">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-16 h-16 rounded-full bg-white/20 backdrop-blur-lg flex items-center justify-center">
+                            <span class="text-2xl font-bold">12</span>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-medium mb-1">健康达人</h3>
+                            <p class="text-sm text-white/80">继续保持，距离下一级还差200经验</p>
+                        </div>
+                    </div>
+                    <img src="https://unpkg.com/lucide-static@latest/icons/crown.svg" class="w-8 h-8 text-yellow-300"/>
+                </div>
+                <div class="space-y-2">
+                    <div class="flex justify-between text-sm mb-1">
+                        <span>Level 12</span>
+                        <span>2800/3000</span>
+                    </div>
+                    <div class="h-2 bg-white/20 rounded-full">
+                        <div class="h-2 rounded-full bg-gradient-to-r from-yellow-300 to-yellow-500" style="width: 85%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 成就统计 -->
+        <div class="px-6 mt-6 grid grid-cols-3 gap-3">
+            <div class="bg-white rounded-2xl p-4 text-center">
+                <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center mx-auto mb-2">
+                    <img src="https://unpkg.com/lucide-static@latest/icons/medal.svg" class="w-6 h-6 text-blue-500"/>
+                </div>
+                <div class="text-2xl font-bold text-gray-800 mb-1">24</div>
+                <div class="text-xs text-gray-500">获得徽章</div>
+            </div>
+            <div class="bg-white rounded-2xl p-4 text-center">
+                <div class="w-12 h-12 rounded-xl bg-green-50 flex items-center justify-center mx-auto mb-2">
+                    <img src="https://unpkg.com/lucide-static@latest/icons/target.svg" class="w-6 h-6 text-green-500"/>
+                </div>
+                <div class="text-2xl font-bold text-gray-800 mb-1">89%</div>
+                <div class="text-xs text-gray-500">目标达成</div>
+            </div>
+            <div class="bg-white rounded-2xl p-4 text-center">
+                <div class="w-12 h-12 rounded-xl bg-yellow-50 flex items-center justify-center mx-auto mb-2">
+                    <img src="https://unpkg.com/lucide-static@latest/icons/flame.svg" class="w-6 h-6 text-yellow-500"/>
+                </div>
+                <div class="text-2xl font-bold text-gray-800 mb-1">16</div>
+                <div class="text-xs text-gray-500">连续打卡</div>
+            </div>
+        </div>
+
+        <!-- 最近获得的成就 -->
+        <div class="px-6 mt-6">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-lg font-bold">最近获得</h2>
+                <button class="text-sm text-gray-500">查看全部</button>
+            </div>
+            <div class="space-y-3">
+                <div class="bg-white rounded-2xl p-4 flex items-center">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center mr-4">
+                        <img src="https://unpkg.com/lucide-static@latest/icons/heart-pulse.svg" class="w-6 h-6 text-white"/>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-medium mb-1">心率管理达人</h3>
+                        <p class="text-sm text-gray-500">连续30天保持健康心率范围</p>
+                    </div>
+                    <div class="text-xs text-gray-400">2小时前</div>
+                </div>
+                <div class="bg-white rounded-2xl p-4 flex items-center">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center mr-4">
+                        <img src="https://unpkg.com/lucide-static@latest/icons/footprints.svg" class="w-6 h-6 text-white"/>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-medium mb-1">运动先锋</h3>
+                        <p class="text-sm text-gray-500">累计步数突破100万步</p>
+                    </div>
+                    <div class="text-xs text-gray-400">昨天</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 成就解锁进度 -->
+        <div class="px-6 mt-6">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-lg font-bold">进行中</h2>
+                <button class="text-sm text-gray-500">更多</button>
+            </div>
+            <div class="space-y-3">
+                <div class="bg-white rounded-2xl p-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center space-x-2">
+                            <img src="https://unpkg.com/lucide-static@latest/icons/dumbbell.svg" class="w-5 h-5 text-blue-500"/>
+                            <h3 class="font-medium">运动达人</h3>
+                        </div>
+                        <span class="text-sm text-blue-500">4/7</span>
+                    </div>
+                    <div class="h-2 bg-gray-100 rounded-full">
+                        <div class="h-2 w-[57%] rounded-full bg-gradient-to-r from-blue-500 to-blue-400"></div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2">连续7天完成所有运动任务</p>
+                </div>
+                <div class="bg-white rounded-2xl p-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center space-x-2">
+                            <img src="https://unpkg.com/lucide-static@latest/icons/brain.svg" class="w-5 h-5 text-yellow-500"/>
+                            <h3 class="font-medium">冥想专家</h3>
+                        </div>
+                        <span class="text-sm text-yellow-500">25/30</span>
+                    </div>
+                    <div class="h-2 bg-gray-100 rounded-full">
+                        <div class="h-2 w-[83%] rounded-full bg-gradient-to-r from-yellow-500 to-yellow-400"></div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2">累计完成30次正念练习</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 特殊成就展示 -->
+        <div class="px-6 mt-6">
+            <div class="bg-gradient-to-br from-blue-900 to-purple-900 rounded-2xl p-4 flex items-center">
+                <div class="flex-1">
+                    <div class="text-white/60 text-sm mb-1">即将解锁</div>
+                    <h3 class="text-white font-medium mb-2">年度健康达人</h3>
+                    <div class="flex items-center">
+                        <img src="https://unpkg.com/lucide-static@latest/icons/gift.svg" class="w-4 h-4 text-yellow-300 mr-2"/>
+                        <span class="text-yellow-300 text-sm">解锁专属健康顾问服务</span>
+                    </div>
+                </div>
+                <div class="w-20 h-20 rounded-full bg-white/10 backdrop-blur flex items-center justify-center">
+                    <img src="https://unpkg.com/lucide-static@latest/icons/award.svg" class="w-10 h-10 text-white"/>
                 </div>
             </div>
         </div>
